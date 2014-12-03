@@ -4,7 +4,7 @@ module Route53Aliaser
 
     def initialize
       @logger = Logger.new(STDOUT)
-      @cache  = Rails.cache #TODO: break dependency with Rails
+      @cache  = ActiveSupport::Cache::MemoryStore.new
     end
 
     def target_key
