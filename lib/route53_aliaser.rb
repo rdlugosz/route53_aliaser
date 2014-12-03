@@ -19,6 +19,11 @@ module Route53Aliaser
   end
 
   def self.update_alias_if_needed
+    unless(config && config.target_zone && config.source_zone && config.zone_id)
+      Configuration.new.logger.error "Route53Aliaser is not configured properly. Please check the docs."
+      return
+    end
+
     aliaser = Route53Aliaser::Aliaser.new(config)
     aliaser.call
   end
