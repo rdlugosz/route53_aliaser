@@ -1,9 +1,10 @@
 module Route53Aliaser
   class Configuration
-    attr_accessor :target_record, :source_record, :zone_id, :logger, :cache
+    attr_accessor :target_record, :source_record, :zone_id, :logger, :cache,
+      :aws_access_key_id, :aws_secret_access_key
 
     def initialize
-      @logger = Logger.new(STDOUT)
+      @logger = defined?(Rails) ? Rails.logger : Logger.new(STDOUT)
       @cache  = ActiveSupport::Cache::MemoryStore.new
     end
 
