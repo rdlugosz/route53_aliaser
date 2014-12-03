@@ -5,11 +5,11 @@ module Route53Aliaser
       @config = config
     end
 
-    def update_target(target_zone, ips, zone_id)
+    def update_target(target_record, ips, zone_id)
       change = {
         action: "UPSERT",
         resource_record_set: {
-          name: target_zone,
+          name: target_record,
           type: "A",
           ttl: 60,
           resource_records: ips.collect{ |ip| { value: ip } }

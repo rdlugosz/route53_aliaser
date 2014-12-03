@@ -1,6 +1,6 @@
 module Route53Aliaser
   class Configuration
-    attr_accessor :target_zone, :source_zone, :zone_id, :logger, :cache
+    attr_accessor :target_record, :source_record, :zone_id, :logger, :cache
 
     def initialize
       @logger = Logger.new(STDOUT)
@@ -8,11 +8,11 @@ module Route53Aliaser
     end
 
     def target_key
-      "rt53_#{target_zone}_ips"
+      "rt53_#{target_record}_ips"
     end
 
     def source_key
-      "rt53_#{source_zone}_ips"
+      "rt53_#{source_record}_ips"
     end
   end
 end
