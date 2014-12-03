@@ -8,7 +8,8 @@ This is useful because Heroku doesn't support these so-called naked domains
 and there are a limited number of DNS providers who support the [ALIAS
 record](http://support.dnsimple.com/articles/alias-record/) type (which is
 essentially a CNAME record set on the root domain, that typically must be an
-A-Record).
+A-Record). Amazon Route 53 only supports ALIASes to a few specific types of
+records, which doesn't solve the problem for Heroku users who require SSL.
 
 This code will:
 
