@@ -10,7 +10,7 @@ Gem::Specification.new do |spec|
   spec.email         = ["ryan@dlugosz.net"]
   spec.summary       = %q{Simulate DNS ALIAS-record support for apex zones (a.k.a. bare / naked / root domains) via Amazon Route 53}
   # spec.description   = %q{TODO: Write a longer description. Optional.}
-  spec.homepage      = ""
+  spec.homepage      = "https://github.com/rdlugosz/route53_aliaser"
   spec.license       = "MIT"
 
   spec.files         = `git ls-files -z`.split("\x0")
