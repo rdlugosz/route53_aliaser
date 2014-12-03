@@ -86,9 +86,3 @@ I'm using this against a limited number of configurations so patches are
 1. Extract the dependency on ActiveSupport. The only thing really in use is
    the caching mechanism.
 1. Include support for other API-enabled DNS Hosts, e.g., Rackspace.
-
-## Warranty
-
-This software is provided “as is” and without any express or implied
-warranties, including, without limitation, the implied warranties of
-merchantability and fitness for a particular purpose.
