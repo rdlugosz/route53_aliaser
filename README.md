@@ -10,23 +10,21 @@ record](http://support.dnsimple.com/articles/alias-record/) type (which is
 essentially a CNAME record set on the root domain, that typically must be an
 A-Record).
 
-This class will:
+This code will:
 
 - Check to see if our cached lookup of the `source_record` has expired
-- if no, return immediately (noop)
-- if yes:
-    - Lookup the A record for our `source_record` (e.g., CNAME to Heroku)
-    - Lookup the A record for our `target_record` (probably the naked
-      domain)
-    - If the Target and Source addresses differ, update the `target_record`
+    - if no, return immediately (noop)
+    - if yes:
+        - Lookup the A record for our `source_record` (e.g., CNAME to Heroku)
+        - Lookup the A record for our `target_record` (probably the naked
+          domain)
+        - If the Target and Source addresses differ, update the `target_record`
 
 ## Installation
 
 Add this line to your application's Gemfile:
 
-```ruby
-gem 'route53_aliaser'
-```
+    gem 'route53_aliaser'
 
 And then execute:
 
@@ -81,6 +79,12 @@ I'm using this against a limited number of configurations so patches are
 4. Push to the branch (`git push origin my-new-feature`)
 5. Create a new Pull Request
 
+### Todos
+
+1. Add some tests! *(Yes, I feel dirty.)*
+1. Extract the dependency on ActiveSupport. The only thing really in use is
+   the caching mechanism.
+1. Include support for other API-enabled DNS Hosts, e.g., Rackspace.
 
 ## Warranty
 
