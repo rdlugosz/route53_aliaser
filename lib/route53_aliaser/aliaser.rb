@@ -20,8 +20,7 @@ module Route53Aliaser
       if target_ips == source_ips
         config.logger.debug "No Route 53 Update required."
       else
-        config.logger.info "IPs for #{config.target_record} #{target_ips} differ \
-          from #{config.source_record} #{source_ips}; will attempt to update."
+        config.logger.info "IPs for #{config.target_record} #{target_ips} differ from #{config.source_record} #{source_ips}; will attempt to update."
         rt53 = Route53Updater.new(config)
         rt53.update_target(config.target_record, source_ips, config.zone_id)
       end
