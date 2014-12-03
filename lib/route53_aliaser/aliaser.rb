@@ -22,7 +22,8 @@ module Route53Aliaser
       else
         config.logger.info "IPs for #{config.target_zone} #{target_ips} differ \
           from #{config.source_zone} #{source_ips}; will attempt to update."
-        Route53Updater.update_target(config.target_zone, source_ips, config.zone_id)
+        rt53 = Route53Updater.new(config)
+        rt53.update_target(config.target_zone, source_ips, config.zone_id)
       end
     end
 
