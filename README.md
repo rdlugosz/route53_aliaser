@@ -61,7 +61,7 @@ Not sure what the best approach is for this yet, but here are a few ideas:
   that it would just call `Route53Aliaser.update_alias_if_needed` and return a
   success code.
 - Dropping `Thread.new { Route53Aliaser.update_alias_if_needed }` into a
-  controller action  gets called relatively frequently (say, your home page).
+  controller action that gets called relatively frequently (say, your home page).
   This is the #YOLO approach, but shouldn't be terribly harmful since: A) this
   is a very short-lived thread, and B) there are no real consequences if the
   thread were suddenly killed. Note that I would not recommend calling this in
