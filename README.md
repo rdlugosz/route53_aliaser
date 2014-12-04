@@ -81,7 +81,7 @@ of the time requests to this URL will return nearly instantly.
 
 If you're not using Rails, or if you'd like to update ad-hoc, just call
 `Route53Aliaser.update_alias_if_needed` periodically. You'll of course need to
-some initialization similar to what is shown above.
+do some initialization similar to what is shown above.
 
 ### Other Options
 
