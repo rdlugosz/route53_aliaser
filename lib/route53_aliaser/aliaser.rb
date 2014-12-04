@@ -68,9 +68,9 @@ module Route53Aliaser
                            expires_in: ttl.seconds,
                            race_condition_ttl: 10
                           )
-        config.logger.debug "Route53Aliaser Caching #{key}: #{ips} for #{ttl} seconds (ttl)"
+        config.logger.debug "Route53Aliaser: Caching #{key}: #{ips} for #{ttl} seconds (ttl)"
       else
-        config.logger.error "Route53Aliaser NOT Caching #{key} because no IPs were found."
+        config.logger.error "Route53Aliaser: NOT Caching #{key} because no IPs were found."
       end
     end
   end
