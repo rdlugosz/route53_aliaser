@@ -21,6 +21,9 @@ This code will:
           domain)
         - If the Target and Source addresses differ, update the `target_record`
 
+The updates are easily triggered by polling a URL in your application that is
+mounted via a Rails Engine.
+
 ## Installation
 
 Add this line to your application's Gemfile:
@@ -37,6 +40,8 @@ Or install it yourself as:
 
 ## Usage
 
+#### With Rails
+
 Add an initializer that looks like this:
 
     # ./config/initializers/route53_aliaser.rb
@@ -47,32 +52,57 @@ Add an initializer that looks like this:
       config.zone_id         = ENV['RT53_ZONE_ID']       #Amazon Hosted Zone ID
 
       # Only need to set these if you aren't already setting them for another AWS service
+      # NOTE: You'll need to use AWS IAM to add a Route 53 read/write Policy for the user/group
+      # associated with these credentials!
       # config.aws_access_key_id     = ENV['RT53_AWS_ACCESS_KEY_ID']
       # config.aws_secret_access_key = ENV['RT53_AWS_SECRET_ACCESS_KEY']
     end
 
+Next, mount the Rails Engine at a URL of your choosing:
 
-Then, just call `Route53Aliaser.update_alias_if_needed` periodically.
+    # ./config/routes.rb
+    mount Route53Aliaser::Engine => '/route53-update'
 
-Not sure what the best approach is for this yet, but here are a few ideas:
+Finally, set up something to ping this URL occasionally:
+
+    $ curl https://example.com/route53-update
+
+Heroku's [free scheduler](https://devcenter.heroku.com/articles/scheduler) has
+an "every 10 minutes" option that'd be great for this. Just put the curl
+command in there. Note that Heroku charges dyno hours for scheduled jobs; if
+you're worried about this then you may prefer to use the "once an hour" option
+instead.
+
+You could also ping that URL via a free service like
+[Pingdom](http://www.pingdom.com/free). Since the DNS lookups are cached, most
+of the time requests to this URL will return nearly instantly.
+
+#### Without Rails
+
+If you're not using Rails, or if you'd like to update ad-hoc, just call
+`Route53Aliaser.update_alias_if_needed` periodically. You'll of course need to
+some initialization similar to what is shown above.
+
+### Other Options
+
+For now, hitting the engine URL is the best option. It should keep things up
+to date with minimal load on your app (since it's basically a NOOP when the
+cached lookups are fresh). Please open an issue with your suggestion if you
+have a better idea. Here are a couple alternatives:
 
 - Add a `cron` job executing a Rake task.
-- Create a special controller action that you load every so often via a ping
-  monitoring service. This controller action would act similar to a webhook in
-  that it would just call `Route53Aliaser.update_alias_if_needed` and return a
-  success code.
 - Dropping `Thread.new { Route53Aliaser.update_alias_if_needed }` into a
-  controller action that gets called relatively frequently (say, your home page).
-  This is the #YOLO approach, but shouldn't be terribly harmful since: A) this
-  is a very short-lived thread, and B) there are no real consequences if the
-  thread were suddenly killed. Note that I would not recommend calling this in
-  line (i.e., not in a separate thread) in a controller action since DNS
-  lookups / AWS calls might be slow & will block the request to your page.
+  controller action that gets called relatively frequently (say, your home
+  page).  This is the #YOLO approach, but shouldn't be terribly harmful since:
+  A) this is a very short-lived thread, and B) there are no real consequences
+  if the thread were suddenly killed. Note that calling this in line (i.e.,
+  not in a separate thread) in a controller action is not recommended since
+  DNS lookups / AWS calls might be slow & will block the request to your page.
 
 ## Contributing
 
-I'm using this against a limited number of configurations so patches are
-*very* welcome!
+So far, this is being used against a limited number of configurations so
+patches are *very* welcome!
 
 1. Fork it ( https://github.com/rdlugosz/route53_aliaser/fork )
 2. Create your feature branch (`git checkout -b my-new-feature`)
@@ -82,7 +112,7 @@ I'm using this against a limited number of configurations so patches are
 
 ### Todos
 
-1. Add some tests! *(Yes, I feel dirty.)*
+1. Add some tests
 1. Extract the dependency on ActiveSupport. The only thing really in use is
    the caching mechanism.
 1. Include support for other API-enabled DNS Hosts, e.g., Rackspace.
