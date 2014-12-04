@@ -11,16 +11,19 @@ module Route53Aliaser
     end
 
     def call
-      # NOOP if we haven't expired
-      return unless stale?
+      unless stale?
+        # NOOP if we haven't expired
+        config.logger.debug "Route53Aliaser: NOOP because cache is fresh"
+        return
+      end
 
       target_ips = get_ips(config.target_record, config.target_key)
       source_ips = get_ips(config.source_record, config.source_key)
 
       if target_ips == source_ips
-        config.logger.debug "No Route 53 Update required."
+        config.logger.debug "Route53Aliaser: No Route 53 Update required (Target IPs match the Source IPs)"
       else
-        config.logger.info "IPs for #{config.target_record} #{target_ips} differ from #{config.source_record} #{source_ips}; will attempt to update."
+        config.logger.info "Route53Aliaser: IPs for #{config.target_record} #{target_ips} differ from #{config.source_record} #{source_ips}; will attempt to update"
         rt53 = Route53Updater.new(config)
         rt53.update_target(config.target_record, source_ips, config.zone_id)
       end

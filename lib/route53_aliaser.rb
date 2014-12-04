@@ -3,6 +3,8 @@ require "route53_aliaser/configuration"
 require "route53_aliaser/route53_updater"
 require "route53_aliaser/aliaser"
 
+require "route53_aliaser/engine" if defined?(Rails)
+
 require "resolv"
 
 require "aws-sdk"
