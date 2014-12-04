@@ -116,3 +116,8 @@ patches are *very* welcome!
 1. Extract the dependency on ActiveSupport. The only thing really in use is
    the caching mechanism.
 1. Include support for other API-enabled DNS Hosts, e.g., Rackspace.
+
+### Questions?
+
+Feel free to use the issue tracker for questions/comments or hit me up on
+Twitter [@lbwski](https://twitter.com/lbwski).
