@@ -74,7 +74,7 @@ Not sure what the best approach is for this yet, but here are a few ideas:
 I'm using this against a limited number of configurations so patches are
 *very* welcome!
 
-1. Fork it ( https://github.com/[my-github-username]/route53_aliaser/fork )
+1. Fork it ( https://github.com/rdlugosz/route53_aliaser/fork )
 2. Create your feature branch (`git checkout -b my-new-feature`)
 3. Commit your changes (`git commit -am 'Add some feature'`)
 4. Push to the branch (`git push origin my-new-feature`)
@@ -86,9 +86,3 @@ I'm using this against a limited number of configurations so patches are
 1. Extract the dependency on ActiveSupport. The only thing really in use is
    the caching mechanism.
 1. Include support for other API-enabled DNS Hosts, e.g., Rackspace.
-
-## Warranty
-
-This software is provided “as is” and without any express or implied
-warranties, including, without limitation, the implied warranties of
-merchantability and fitness for a particular purpose.
