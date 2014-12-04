@@ -1,16 +1,19 @@
 # Route53Aliaser
 
-Simulate DNS ALIAS-record support for [apex
+Simulate DNS ALIAS-Record support for [apex
 zones](https://devcenter.heroku.com/articles/apex-domains) (a.k.a. bare /
 naked / root domains) via Amazon [Route 53](https://aws.amazon.com/route53/)
 by looking for changes to the CNAME you'd like to point to and updating your
 A-Record via the Route 53 APIs.
 
-This is useful because Heroku doesn't support these so-called naked domains
-and there are a limited number of DNS providers who support the [ALIAS
-record](http://support.dnsimple.com/articles/alias-record/) type (which is
-essentially a fake CNAME record set on the root domain; fake because you
-[cannot have a CNAME at the
+Just point your ping monitor at the engine URL and you're good to go! Your
+A-Record will remain in sync with whatever CNAME you point it at.
+
+This is useful because some providers (like Heroku) don't support these
+so-called naked domains and there are a limited number of DNS providers who
+support the [ALIAS record](http://support.dnsimple.com/articles/alias-record/)
+type (which is essentially a fake CNAME record set on the root domain; fake
+because you [cannot have a CNAME at the
 apex](http://serverfault.com/questions/613829/why-cant-a-cname-record-be-used-at-the-apex-of-a-domain)).
 Amazon Route 53 only supports ALIASes to a few specific types of records,
 which doesn't solve the problem for Heroku users who require SSL.
@@ -25,8 +28,6 @@ This code will:
           domain)
         - If the Target and Source addresses differ, update the `target_record`
 
-The updates are easily triggered by polling a URL in your application that is
-mounted via a Rails Engine.
 
 ## Installation
 
@@ -41,6 +42,7 @@ And then execute:
 Or install it yourself as:
 
     $ gem install route53_aliaser
+
 
 ## Usage
 
@@ -71,16 +73,20 @@ Finally, set up something to ping this URL occasionally:
 
     $ curl https://example.com/route53-update
 
+The easiest way to do this is to ping that URL via a free service like
+[Pingdom](http://www.pingdom.com/free). Since the DNS lookups are cached, most
+of the time requests to this URL will return nearly instantly. Pingdom
+defaults to checking once per minute, which should be within even the shortest
+TTLs.
+
 Heroku's [free scheduler](https://devcenter.heroku.com/articles/scheduler) has
-an "every 10 minutes" option that'd be great for this. Just put the curl
-command in there. Note that Heroku
+an "every 10 minutes" option that could also be used for this. Just put the
+curl command in there. Note that Heroku
 [charges](https://devcenter.heroku.com/articles/usage-and-billing) dyno hours
 for scheduled jobs; if you're worried about this then you may prefer to use
-the "once an hour" option instead.
-
-You could also ping that URL via a free service like
-[Pingdom](http://www.pingdom.com/free). Since the DNS lookups are cached, most
-of the time requests to this URL will return nearly instantly.
+the "once an hour" option instead. The downside to this approach is that the
+further you stretch out the update interval the more likely you are to end up
+with an out of date A-Record.
 
 #### Without Rails
 
@@ -103,6 +109,7 @@ have a better idea. Here are a couple alternatives:
   if the thread were suddenly killed. Note that calling this in line (i.e.,
   not in a separate thread) in a controller action is not recommended since
   DNS lookups / AWS calls might be slow & will block the request to your page.
+
 
 ## Contributing
 
