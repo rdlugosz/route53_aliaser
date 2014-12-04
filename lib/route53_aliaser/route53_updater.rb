@@ -1,3 +1,5 @@
+# AWS::Route53 API docs:
+# http://docs.aws.amazon.com/AWSRubySDK/latest/AWS/Route53.html
 module Route53Aliaser
   class Route53Updater
     attr_reader :config
