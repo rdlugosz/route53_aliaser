@@ -1,8 +1,10 @@
 # Route53Aliaser
 
 Simulate DNS ALIAS-record support for [apex
-zones](https://devcenter.heroku.com/articles/apex-domains) (a.k.a. bare / naked / root
-domains) via Amazon [Route 53](https://aws.amazon.com/route53/).
+zones](https://devcenter.heroku.com/articles/apex-domains) (a.k.a. bare /
+naked / root domains) via Amazon [Route 53](https://aws.amazon.com/route53/)
+by looking for changes to the CNAME you'd like to point to and updating your
+A-Record via the Route 53 APIs.
 
 This is useful because Heroku doesn't support these so-called naked domains
 and there are a limited number of DNS providers who support the [ALIAS
