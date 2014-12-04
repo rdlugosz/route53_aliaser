@@ -69,11 +69,11 @@ Next, mount the Rails Engine at a URL of your choosing:
     # ./config/routes.rb
     mount Route53Aliaser::Engine => '/route53-update'
 
-Finally, set up something to ping this URL occasionally:
+Finally, set up something to request this URL occasionally:
 
     $ curl https://example.com/route53-update
 
-The easiest way to do this is to ping that URL via a free service like
+The easiest way to do this is to monitor that URL via a free service like
 [Pingdom](http://www.pingdom.com/free) or [NewRelic](http://www.newrelic.com).
 Since the DNS lookups are cached, most of the time requests to this URL will
 return nearly instantly. Pingdom defaults to checking once per minute, which
