@@ -74,10 +74,14 @@ Finally, set up something to ping this URL occasionally:
     $ curl https://example.com/route53-update
 
 The easiest way to do this is to ping that URL via a free service like
-[Pingdom](http://www.pingdom.com/free). Since the DNS lookups are cached, most
-of the time requests to this URL will return nearly instantly. Pingdom
-defaults to checking once per minute, which should be within even the shortest
-TTLs.
+[Pingdom](http://www.pingdom.com/free) or [NewRelic](http://www.newrelic.com).
+Since the DNS lookups are cached, most of the time requests to this URL will
+return nearly instantly. Pingdom defaults to checking once per minute, which
+should be within even the shortest TTLs. It appears that NewRelic checks
+approximately once every [20
+seconds](https://docs.newrelic.com/docs/alerts/alert-policies/downtime-alerts/availability-monitoring),
+which is probably overkill but shouldn't really matter since we don't do
+anything if the cache is fresh.
 
 Heroku's [free scheduler](https://devcenter.heroku.com/articles/scheduler) has
 an "every 10 minutes" option that could also be used for this. Just put the
