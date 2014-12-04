@@ -69,9 +69,10 @@ Finally, set up something to ping this URL occasionally:
 
 Heroku's [free scheduler](https://devcenter.heroku.com/articles/scheduler) has
 an "every 10 minutes" option that'd be great for this. Just put the curl
-command in there. Note that Heroku charges dyno hours for scheduled jobs; if
-you're worried about this then you may prefer to use the "once an hour" option
-instead.
+command in there. Note that Heroku
+[charges](https://devcenter.heroku.com/articles/usage-and-billing) dyno hours
+for scheduled jobs; if you're worried about this then you may prefer to use
+the "once an hour" option instead.
 
 You could also ping that URL via a free service like
 [Pingdom](http://www.pingdom.com/free). Since the DNS lookups are cached, most
