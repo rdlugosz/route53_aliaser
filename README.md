@@ -9,9 +9,11 @@ A-Record via the Route 53 APIs.
 This is useful because Heroku doesn't support these so-called naked domains
 and there are a limited number of DNS providers who support the [ALIAS
 record](http://support.dnsimple.com/articles/alias-record/) type (which is
-essentially a CNAME record set on the root domain, that typically must be an
-A-Record). Amazon Route 53 only supports ALIASes to a few specific types of
-records, which doesn't solve the problem for Heroku users who require SSL.
+essentially a fake CNAME record set on the root domain; fake because you
+[cannot have a CNAME at the
+apex](http://serverfault.com/questions/613829/why-cant-a-cname-record-be-used-at-the-apex-of-a-domain)).
+Amazon Route 53 only supports ALIASes to a few specific types of records,
+which doesn't solve the problem for Heroku users who require SSL.
 
 This code will:
 
