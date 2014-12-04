@@ -5,7 +5,7 @@ module Route53Aliaser
 
     def initialize
       @logger = defined?(Rails) ? Rails.logger : Logger.new(STDOUT)
-      @cache  = ActiveSupport::Cache::MemoryStore.new
+      @cache  = defined?(Rails) ? Rails.cache  : ActiveSupport::Cache::MemoryStore.new
     end
 
     def target_key
