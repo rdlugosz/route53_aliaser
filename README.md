@@ -71,7 +71,9 @@ Next, mount the Rails Engine at a URL of your choosing:
 
 Finally, set up something to request this URL occasionally:
 
-    $ curl https://example.com/route53-update
+    $ curl https://www.example.com/route53-update
+
+    NOTE: This MUST be your CNAME, not the root! (for obvious reasons)
 
 The easiest way to do this is to monitor that URL via a free service like
 [Pingdom](http://www.pingdom.com/free) or [NewRelic](http://www.newrelic.com).
@@ -91,6 +93,9 @@ for scheduled jobs; if you're worried about this then you may prefer to use
 the "once an hour" option instead. The downside to this approach is that the
 further you stretch out the update interval the more likely you are to end up
 with an out of date A-Record.
+
+Whatever you choose, be sure the URL you are pinging is the CNAME and *not*
+your root domain! (Otherwise, how could this possibly work?)
 
 #### Without Rails
 
