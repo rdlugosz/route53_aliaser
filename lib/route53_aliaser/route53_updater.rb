@@ -7,8 +7,8 @@ module Route53Aliaser
       @config = config
     end
 
-    def update_target(target_record, ips, zone_id)
-      change = {
+    def update_target(target_record, source_record, ips, zone_id)
+      a_record = {
         action: "UPSERT",
         resource_record_set: {
           name: target_record,
@@ -17,9 +17,18 @@ module Route53Aliaser
           resource_records: ips.collect{ |ip| { value: ip } }
         }
       }
+      txt_record = {
+        action: "UPSERT",
+        resource_record_set: {
+          name: target_record,
+          type: "TXT",
+          ttl: 60,
+          resource_records: [value: %{"ALIAS for #{source_record}"}]
+        }
+      }
       change_batch = {
         comment: "auto updated",
-        changes: [change]
+        changes: [a_record, txt_record]
       }
       options = {
         hosted_zone_id: zone_id,
