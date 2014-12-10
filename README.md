@@ -95,7 +95,8 @@ further you stretch out the update interval the more likely you are to end up
 with an out of date A-Record.
 
 Whatever you choose, be sure the URL you are pinging is the CNAME and *not*
-your root domain! (Otherwise, how could this possibly work?)
+your root domain! (Otherwise, how could this possibly work?) The code will
+raise an error if you attempt to do this.
 
 #### Without Rails
 
@@ -118,6 +119,42 @@ have a better idea. Here are a couple alternatives:
   if the thread were suddenly killed. Note that calling this in line (i.e.,
   not in a separate thread) in a controller action is not recommended since
   DNS lookups / AWS calls might be slow & will block the request to your page.
+
+
+### SSL vs non-SSL endpoints on Heroku
+
+In testing, we've noticed that the Heroku SSL endpoints, which use Amazon
+ELBs, tend to keep a fairly static set of IPs. However, the non-SSL routers
+(e.g., `us-east-1-a.route.herokuapp.com`) tend to present a new IP address on
+every DNS expiration. This isn't a problem per se; just something you should
+be aware of if you think it's strange that your Rt 53 record is constantly
+being updated. 
+
+You can verify that your apps are not using the "legacy" routing system by
+logging into your Heroku account and visiting
+[https://legacy-routing.herokuapp.com](https://legacy-routing.herokuapp.com).
+
+
+### Amazon IAM Policy for Route 53
+
+The minimal IAM policy assigned to the user whose credentials are being used
+with Route53Aliaser should look something like this:
+
+    {
+      "Version": "2012-10-17",
+      "Statement": [
+        {
+          "Sid": "Stmt1418344622100",
+          "Effect": "Allow",
+          "Action": [
+            "route53:ChangeResourceRecordSets"
+          ],
+          "Resource": [
+            "arn:aws:route53:::hostedzone/ZQM9AEI9WXMW9"
+          ]
+        }
+      ]
+    }
 
 
 ## Contributing
