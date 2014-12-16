@@ -128,7 +128,7 @@ ELBs, tend to keep a fairly static set of IPs. However, the non-SSL routers
 (e.g., `us-east-1-a.route.herokuapp.com`) tend to present a new IP address on
 every DNS expiration. This isn't a problem per se; just something you should
 be aware of if you think it's strange that your Rt 53 record is constantly
-being updated. 
+being updated.
 
 You can verify that your apps are not using the "legacy" routing system by
 logging into your Heroku account and visiting
