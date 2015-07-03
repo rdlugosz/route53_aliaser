@@ -1,3 +1,6 @@
+# Route53Aliaser 0.0.5
+- Add warning to the Readme that this software is no longer being supported
+
 # Route53Aliaser 0.0.4
 - Add TXT record alongside A-Record indicating that this is an ALIAS (#4)
 - Raise error if the Rails Engine is called with a `request.host` that matches

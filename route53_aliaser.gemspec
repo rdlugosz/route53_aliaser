@@ -9,9 +9,11 @@ Gem::Specification.new do |spec|
   spec.authors       = ["Ryan Dlugosz"]
   spec.email         = ["ryan@dlugosz.net"]
   spec.summary       = %q{Simulate DNS ALIAS-record support for apex zones (a.k.a. bare / naked / root domains) via Amazon Route 53}
-  # spec.description   = %q{TODO: Write a longer description. Optional.}
+  spec.description   = %q{NOTE: This software is no longer being maintained and may have issues. Please check the Readme.}
   spec.homepage      = "https://github.com/rdlugosz/route53_aliaser"
   spec.license       = "MIT"
+
+  spec.post_install_message = "WARNING!! Route53Aliaser is no longer being maintained and may have issues! Please see the Readme."
 
   spec.files         = `git ls-files -z`.split("\x0")
   spec.executables   = spec.files.grep(%r{^bin/}) { |f| File.basename(f) }

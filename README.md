@@ -1,3 +1,12 @@
+## Warning!
+
+
+**THIS PROJECT IS NO LONGER MAINTAINED AND MAY HAVE ISSUES.**
+
+If you would like to support this software going forward, please create
+a fork and test extensively prior to any production deployments!
+
+
 # Route53Aliaser
 
 Simulate DNS ALIAS-Record support for [apex

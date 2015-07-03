@@ -26,6 +26,8 @@ module Route53Aliaser
       return
     end
 
+    config.logger.info "WARNING: Route53Aliaser is no longer maintained and may have unresolved issues."
+
     aliaser = Route53Aliaser::Aliaser.new(config)
     aliaser.call
   end
